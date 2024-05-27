@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="65dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="5dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/categoryIconIv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#A020F0"
+        app:contentPadding="10dp"
+        app:shapeAppearanceOverlay="@style/ImageStyle_Circle"
+        android:src="@drawable/ic_phone_white"
+        />
+
+    <TextView
+        android:id="@+id/categoryTitleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Category"
+        android:textAlignment="center"
+        android:textSize="8sp"/>
+
+</LinearLayout>
