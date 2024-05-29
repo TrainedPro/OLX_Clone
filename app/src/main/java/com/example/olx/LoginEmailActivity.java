@@ -3,6 +3,7 @@ package com.example.olx;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -85,15 +86,15 @@ public class LoginEmailActivity extends AppCompatActivity {
         progressDialog.setMessage("Logging In");
         progressDialog.show();
 
-        // TODO: (replace this with your actual login logic)
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // Simulate login success or failure
-                        boolean isLoginSuccessful = true; // Change this to actual login result
+                        Log.d("Login", "Email: " + binding.emailEt.getText().toString().trim() + ", Password: " + binding.passwordEt.getText().toString().trim());
+                        Utils.User isLoginSuccessful = Utils.loginUser(binding.emailEt.getText().toString().trim(), binding.passwordEt.getText().toString().trim());
                         progressDialog.dismiss();
-                        if (isLoginSuccessful) {
-                            String authToken = "example_auth_token"; // Replace with actual auth token
+                        if (isLoginSuccessful != null) {
+                            String authToken = String.valueOf(isLoginSuccessful.getId()); // Replace with actual auth token
                             callback.onSuccess(authToken);
                         } else {
                             callback.onFailure("Invalid email or password");

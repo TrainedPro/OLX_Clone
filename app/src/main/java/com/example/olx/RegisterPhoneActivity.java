@@ -6,11 +6,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.olx.databinding.ActivityRegisterPhoneBinding;
 
@@ -91,15 +87,19 @@ public class RegisterPhoneActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account");
         progressDialog.show();
 
-        // TODO bool signUpWithPhone(phone, password). False indicating phone is used
-        boolean isRegistrationSuccessful = true;
+        String name = binding.nameEt.getText().toString().trim();
+        String phone = binding.phoneEt.getText().toString().trim();
+        String password = binding.passwordEt.getText().toString().trim();
+
+
+        Utils.User isRegistrationSuccessful = Utils.registerUser(name, null, password, phone);
         progressDialog.dismiss();
 
-        if (isRegistrationSuccessful) {
-            String authToken = "example_auth_token"; // Replace with actual auth token
+        if (isRegistrationSuccessful != null) {
+            String authToken = String.valueOf(isRegistrationSuccessful.getId()); // Replace with actual auth token
             callback.onSuccess(authToken);
         } else {
-            callback.onFailure("Invalid phone or password");
+            callback.onFailure("Invalid email or password");
         }
 
 

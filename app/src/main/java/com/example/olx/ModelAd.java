@@ -1,21 +1,21 @@
 package com.example.olx;
 
+import java.util.ArrayList;
+
 public class ModelAd {
 
     int id;
     int uid;
-
     String title;
     String category;
     String description;
     String area;
     float price;
-    boolean favourite;
 
     public ModelAd() {
     }
 
-    public ModelAd(int id, int uid, String title, String category, String description, String area, float price, boolean favourite) {
+    public ModelAd(int id, int uid, String title, String category, String description, String area, float price) {
         this.id = id;
         this.uid = uid;
         this.title = title;
@@ -23,7 +23,6 @@ public class ModelAd {
         this.description = description;
         this.area = area;
         this.price = price;
-        this.favourite = favourite;
     }
 
     public int getId() {
@@ -82,11 +81,16 @@ public class ModelAd {
         this.price = price;
     }
 
-    public boolean isFavourite() {
-        return favourite;
+    public boolean isFavourite(int userId) {
+        ArrayList<Integer> favorites = Utils.userFavorites.get(userId);
+        return favorites != null && favorites.contains(this.id);
     }
 
-    public void setFavourite(boolean favourite) {
-        this.favourite = favourite;
+    public void setFavourite(int userId, boolean favourite) {
+        if (favourite) {
+            Utils.addToFavourites(null, userId, this.id); // null for context if you don’t want to show a toast message
+        } else {
+            Utils.removeFromFavourites(null, userId, this.id); // null for context if you don’t want to show a toast message
+        }
     }
 }

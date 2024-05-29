@@ -1,7 +1,7 @@
 package com.example.olx;
 
 import android.content.Context;
-import android.view.Display;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +35,8 @@ public class AdapterAd extends RecyclerView.Adapter<AdapterAd.HolderAd> implemen
         this.filterList = adArrayList;
     }
 
+
+
     @NonNull
     @Override
     public HolderAd onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,12 +54,31 @@ public class AdapterAd extends RecyclerView.Adapter<AdapterAd.HolderAd> implemen
         String address = modelAd.getArea();
         String price = String.valueOf(modelAd.getPrice());
 
+        if(SessionManager.getInstance(context).isLoggedIn()) checkIsFavourite(modelAd, holder);
+
         holder.titleTv.setText(title);
         holder.descriptionTv.setText(description);
         holder.addressTv.setText(address);
         holder.priceTv.setText(price);
 
+        holder.favBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(modelAd.isFavourite(Integer.parseInt(SessionManager.getInstance(context).getAuthString()))) Utils.removeFromFavourites(context, Integer.parseInt(SessionManager.getInstance(context).getAuthToken()), modelAd.getId());
+                else Utils.addToFavourites(context, Integer.parseInt(SessionManager.getInstance(context).getAuthToken()), modelAd.getId());
 
+                context.startActivity(new Intent(context, MainActivity.class));
+
+
+            }
+        });
+
+    }
+
+    private void checkIsFavourite(ModelAd modelAd, HolderAd holder) {
+
+        if(modelAd.isFavourite(Integer.parseInt(SessionManager.getInstance(context).getAuthString()))) holder.favBtn.setImageResource(R.drawable.ic_fav_yes_black);
+        else holder.favBtn.setImageResource(R.drawable.ic_fav_black);
     }
 
     @Override
@@ -89,7 +110,6 @@ public class AdapterAd extends RecyclerView.Adapter<AdapterAd.HolderAd> implemen
             favBtn = binding.favBtn;
             addressTv = binding.addressTv;
             priceTv = binding.priceTv;
-
 
         }
     }

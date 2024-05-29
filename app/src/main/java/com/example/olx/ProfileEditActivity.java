@@ -1,24 +1,20 @@
 package com.example.olx;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.olx.databinding.ActivityProfileEditBinding;
 
@@ -78,8 +74,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         String confirmation = binding.deleteEt.getText().toString().trim();
 
         if(confirmation.equals("CONFIRM")) {
-            // TODO: Delete user and all related information (favourites and chats)
-            // deleteUser(ID)
+            Utils.deleteUser(Integer.parseInt(SessionManager.getInstance(this).getAuthToken()));
             SessionManager sessionManager = SessionManager.getInstance(this);
             sessionManager.clearAuthToken();
             startActivity(new Intent(this, MainActivity.class));
@@ -97,33 +92,35 @@ public class ProfileEditActivity extends AppCompatActivity {
         String phone = binding.phoneEt.getText().toString().trim();
         String password = binding.passwordEt.getText().toString().trim();
 
+        Log.d("Update Password", "Password: " + password);
+
+        // BUG: Account can exist without email and phone
+        if(email.isEmpty()) email = null;
+        if(phone.isEmpty()) phone = null;
+        if(password.isEmpty()) password = null;
+
         progressDialog.setMessage("Updating Info");
         progressDialog.show();
 
-        // TODO: change user info
-        // void setUserInfo(id, name, email, phone, password)
-        // should handle null values (e.g if email is null or if phone is null)
+        Utils.setUserInfo(Integer.parseInt(SessionManager.getInstance(this).getAuthToken()), name, email, phone, password);
 
         progressDialog.dismiss();
         Utils.toast(ProfileEditActivity.this, "Profile Updated");
 
         finish();
+        startActivity(new Intent(this, MainActivity.class).putExtra("frgToLoad", 4));
     }
 
     private void loadUserInfo() {
-        // TODO: retrieve user info
-        // hashMap<String, String> getUserInfo(int ID)
-        // returns id, name, email, phone, email
+        Utils.User user = Utils.getUser(Integer.parseInt(SessionManager.getInstance(this).getAuthToken()));
 
-        int id;
-        String name = "Hassaan Anwar";
-        String email = "p229160@pwr.nu.edu.pk";
-        String phone = null;
+        String name = user.getUserName();
+        String email = user.getEmail();
+        String phone = user.getPhone();
 
         binding.nameEt.setText(name);
         binding.emailEt.setText(email);
         binding.phoneEt.setText(phone);
-        binding.passwordEt.setText("New Password");
     }
 
     private void imagePickDialog() {

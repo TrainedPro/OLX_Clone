@@ -33,6 +33,11 @@ public class SessionManager {
         return sharedPreferences.getString(KEY_AUTH_TOKEN, null);
     }
 
+    // Remove static authString and use shared preferences directly
+    public String getAuthString() {
+        return getAuthToken();
+    }
+
     public void clearAuthToken() {
         editor.remove(KEY_AUTH_TOKEN);
         editor.apply();

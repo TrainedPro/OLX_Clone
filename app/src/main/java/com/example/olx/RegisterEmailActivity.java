@@ -2,6 +2,7 @@ package com.example.olx;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.app.ProgressDialog;
@@ -87,12 +88,18 @@ public class RegisterEmailActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account");
         progressDialog.show();
 
-        // TODO bool signUpWithEmail(email, password). False indicating email is used
-        boolean isRegistrationSuccessful = true;
+        String name = binding.nameEt.getText().toString().trim();
+        String email = binding.emailEt.getText().toString().trim();
+        String password = binding.passwordEt.getText().toString().trim();
+
+
+        Utils.User isRegistrationSuccessful = Utils.registerUser(name, email, password, null);
+        Log.d("Signin", "Email: " + email + ", Password: " + password);
+
         progressDialog.dismiss();
 
-        if (isRegistrationSuccessful) {
-            String authToken = "example_auth_token"; // Replace with actual auth token
+        if (isRegistrationSuccessful != null) {
+            String authToken = String.valueOf(isRegistrationSuccessful.getId()); // Replace with actual auth token
             callback.onSuccess(authToken);
         } else {
             callback.onFailure("Invalid email or password");

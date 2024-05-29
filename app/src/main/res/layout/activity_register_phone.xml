@@ -62,12 +62,35 @@
             android:layout_marginTop="10dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phoneTil"
+            android:id="@+id/nameTil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_marginTop="10dp"
             android:layout_below="@id/registerLabelTv"
+            android:hint="Full Name"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:startIconDrawable="@drawable/ic_person_white">
+
+            <EditText
+                android:id="@+id/nameEt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
+                android:paddingStart="48dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneTil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/nameTil"
             android:hint="Phone"
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"

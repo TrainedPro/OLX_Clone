@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import com.example.olx.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 
 
@@ -104,23 +103,20 @@ public class HomeFragment extends Fragment {
     private void loadAds(String category) {
         adArrayList = new ArrayList<>();
 
-        // TODO: Get all ads
-        // ArrayList<ModelAd> getAllProducts();
-        // adArrayList = getAllProducts();
+        ArrayList<ModelAd> products = Utils.getProducts();
 
-        for(int i = 0 ; i < adArrayList.size(); i++) {
-            if(category.equals("all")) {
-                ModelAd modelAd = new ModelAd(
-                        adArrayList[i].id,
-                        adArrayList[i].uid,
-                        adArrayList[i].title,
-                        adArrayList[i].category,
-                        adArrayList[i].description,
-                        adArrayList[i].area,
-                        adArrayList[i].price);
-                adArrayList.add(adArrayList[i]);
+        for(int i = 0 ; i < products.size(); i++) {
+            if(category.equals("All")) {
+                adArrayList.add(products.get(i));
+            } else {
+                if(category.equals(products.get(i).getCategory())){
+                adArrayList.add(products.get(i));
+                }
             }
         }
+
+        adapterAd = new AdapterAd(mContext, adArrayList);
+        binding.adsRv.setAdapter(adapterAd);
 
     }
 }

@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.olx.databinding.ActivityMainBinding;
 import com.example.olx.databinding.FragmentAccountBinding;
 
 public class AccountFragment extends Fragment {
@@ -65,17 +64,17 @@ public class AccountFragment extends Fragment {
     }
 
     private void loadUserInfo() {
-        // TODO: retrieve user info
-        // hashMap<String, String> getUserInfo(int ID)
-        // returns id, name, email, phone, email
+        Utils.User user = Utils.getUser(Integer.parseInt(SessionManager.getInstance(mContext).getAuthString()));
 
-        int id;
-        String name = "Hassaan Anwar";
-        String email = "p229160@pwr.nu.edu.pk";
-        String phone = null;
+        String name = user.getUserName();
+        String email = user.getEmail();
+        String phone = user.getPhone();
 
+        if (name == null) binding.emailTv.setText("");
         binding.nameTv.setText(name);
-        binding.emailTv.setText(email);
-        binding.phoneTv.setText(phone);
+        if (email == null) binding.emailTv.setText("");
+        else binding.emailTv.setText(email);
+        if (phone == null) binding.phoneTv.setText("");
+        else binding.emailTv.setText(email);
     }
 }

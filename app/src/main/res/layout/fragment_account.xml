@@ -39,7 +39,7 @@
             android:layout_below="@id/profileIv"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="20dp"
-            android:text="Full Name"/>
+            android:text=""/>
 
         <TextView
             android:id="@+id/emailLabelTv"
@@ -58,7 +58,7 @@
             android:layout_below="@id/nameLabelTv"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
-            android:text="example@example.com"/>
+            android:text=""/>
 
         <TextView
             android:id="@+id/phoneLabelTv"
@@ -77,7 +77,7 @@
             android:layout_below="@id/emailLabelTv"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
-            android:text="0123456789"/>
+            android:text=""/>
         
         <LinearLayout
             android:layout_width="match_parent"

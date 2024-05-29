@@ -23,7 +23,7 @@ public class FilterAd extends Filter {
 
             ArrayList<ModelAd> filteredModels = new ArrayList<>();
 
-            for(int i = 0; i < filteredModels.size(); i++) {
+            for(int i = 0; i < filterList.size(); i++) {
                 if(filterList.get(i).getTitle().toUpperCase().contains(constraint)
                         || filterList.get(i).getCategory().toUpperCase().contains(constraint)) {
                     filteredModels.add(filterList.get(i));
